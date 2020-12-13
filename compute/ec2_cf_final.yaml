@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: "2010-09-09"
+#Metadata:
+#Mapping:
+#Parameters:
+#Transformation:
+Resources:
+  WebInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      BlockDeviceMappings:
+        - DeviceName: "/dev/sda1"
+          Ebs:
+            VolumeSize: '8'
+            VolumeType: 'gp2'
+            DeleteOnTermination: "false"
+      InstanceType: 't2.micro'
+      ImageId: 'image id depends on the region'
+      KeyName: 'key-name'
+      Monitoring: true
+      #VpcId: 'not required' 
+      SecurityGroupIds: ['Secirity groups in list items']
+      SubnetId: 'Name of the subnet'
+      Tags:
+        - Key: Name
+          Value: CF_Test
+#Conditions:
+Outputs:
+  PublicIp:
+    Value:
+      Fn::GetAtt:
+        - WebInstance
+        - PublicIp
+    Description: Server's PublicIp Address
